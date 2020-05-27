@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>float</title>
+    <style>
+        *{
+            padding: 0;
+            margin:0;
+        }
+        .div1{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color: lightpink;
+        }
+        .div2{
+            margin-left:100px;
+            overflow: auto;
+            box-sizing: border-box;
+            background-color: lightgreen;
+        }
+        .test-flex{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .test-flex>div{
+         flex: auto;
+        }
+        .line{
+            margin-top: 100px;
+            height: 1px;
+            background: red;
+            transform: scaleY(0.5);
+        }
+    </style>
+</head>
+<body>
+<div class="div1">
+    这是div1
+</div>
+<div class="div2">
+    <div style="float:left">这是一个浮动的标题</div>
+    <div style="clear:both"></div>
+</div>
+<div class="test-flex">
+    <div>我是flex测试文字</div>
+    <div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div>
+</div>
+
+<div class="line"></div>
+</body>
+</html>

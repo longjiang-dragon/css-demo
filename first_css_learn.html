@@ -1,0 +1,43 @@
+<html>
+<head>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{message}}</p>
+    <h1 v-if="canShow">现在你看到我了</h1>
+    <div>{{message | capitalize}}</div>
+    <ol>
+        <template v-for="(value,ke) in  sites">
+            <li>
+                {{ke}} : {{value}}
+            </li>
+            <li>---------------</li>
+        </template>
+
+    </ol>
+</div>
+
+<script>
+
+
+    
+
+var arr = new Array(6)
+arr[0] = "George"
+arr[1] = "John"
+arr[2] = "Thomas"
+arr[3] = "James"
+arr[4] = "Adrew"
+arr[5] = "Martin"
+
+document.write(arr + "<br />")
+arr.splice(2)
+document.write(arr + "<br />")
+
+</script>
+
+</body>
+
+
+</html>
