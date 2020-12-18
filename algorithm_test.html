@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+  const subFlow = createFlow([() => delay(1000).then(() => console.log('c'))])
+
+  createFlow([
+    () => console.log('a'),
+    () => console.log('b'),
+    subFlow,
+    [() => delay(1000).then(() => console.log('d')), () => console.log('e')],
+  ]).run(() => {
+    console.log('done')
+  })
+
+  /**
+   * 像一个深度遍历的树的写法
+   */
+  function createFlow (effects = []) {
+    let sources = effects.slice().flat();
+
+    function run (callback) {
+      console.log("sources.length====",sources.length)
+      while (sources.length) {
+        const task = sources.shift()
+        console.log('task===', task)
+        // 如果任务是函数，判断其是否为promise，如果是，将剩下的任务放在then中执行
+        // 如果不是，根据isFlow来判断是否为嵌套任务（Object类型），如果是，执行该嵌套任务，并在回调函数中执行剩下的任务
+        if (typeof task === 'function') {
+          //所有的方法都是在这里执行的，拿到结果值
+          const res = task()
+          if (res && res.then) {
+            console.log('then===', res)
+            //如果返回的是一个promise,列表中的任务
+            res.then(createFlow(sources).run)
+            break
+          }
+        } else if (task && task.isFlow) {
+          console.log("else if")
+          //通过createFlow创建的
+          task.run(createFlow(sources).run)
+          break
+        }
+      }
+      // 在所有任务执行完毕后 执行传入的回调函数
+      callback && callback()
+    }
+
+    return {
+      run,
+      isFlow: true,
+    }
+
+  }
+
+</script>
+</html>

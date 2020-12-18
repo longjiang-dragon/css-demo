@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>display:inline-block</title>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+  // const data = {
+  //   age: 100,
+  //   name: '小明',
+  // }
+  // Object.keys(data).forEach(function (key) {
+  //   let subs = []
+  //   Object.defineProperty(data, key, {
+  //     enumerable: false,
+  //     configurable: true,
+  //
+  //     get: function getter () {
+  //       console.log('访问get')
+  //       //这里怎么拿到访问都的引用的？
+  //       if (target) {
+  //         subs.push(target)
+  //       }
+  //       return this.data[key]
+  //
+  //     },
+  //
+  //     set: function setter (newVal) {
+  //       if (newVal === data[key]) {
+  //         return    // 如果数据没有变动，函数结束，不执行下面的代码
+  //       }
+  //       this.data[key] = newVal  //数据重新赋值
+  //
+  //       subs.forEach(function () {
+  //         // 通知subs里面的所有的订阅者
+  //       })
+  //     },
+  //   })
+  //
+  // })
+  // data.age = 2222
+
+  const aryMethods = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse']
+  const arrayAugmentations = []
+
+  aryMethods.forEach((method) => {
+
+    // 这里是原生Array的原型方法
+    let original = Array.prototype[method]
+
+    // 将push, pop等封装好的方法定义在对象arrayAugmentations的属性上
+    // 注意：是属性而非原型属性
+    arrayAugmentations[method] = function () {
+      console.log('我被改变啦!')
+
+      // 调用对应的原生方法并返回结果
+      return original.apply(this, arguments)
+    }
+
+  })
+
+  let list = ['a', 'b', 'c']
+  // 替换list的原型对象，所以下面的push方法调用的是上面定义的方法，我们就是监听到数据的改变啦
+
+  list.__proto__ = arrayAugmentations
+  list.push('d')  // 我被改变啦！ 4
+
+  // 这里的list2没有被重新定义原型指针，所以就正常输出
+  let list2 = ['a', 'b', 'c']
+  list2.push('d')  // 4
+</script>
+</body>
+</html>

@@ -1,39 +1,72 @@
 <html>
 <head>
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <style type="text/css">
+        .add {
+            display: inline-block;
+            width: 76px;
+            height: 76px;
+            color: #ccc;
+            border: 2px dashed;
+            text-indent: -12em;
+            transition: color .25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add:hover {
+            color: #34538b;
+        }
+
+        .add::before, .add::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
+
+        .add::before {
+            width: 20px;
+            border-top: 4px solid;
+            margin: -2px 0 0 -10px;
+        }
+
+        .add::after {
+            height: 20px;
+            border-left: 4px solid;
+            margin: -10px 0 0 -2px;
+        }
+    </style>
 </head>
 <body>
-<div id="app">
-    <p>{{message}}</p>
-    <h1 v-if="canShow">现在你看到我了</h1>
-    <div>{{message | capitalize}}</div>
-    <ol>
-        <template v-for="(value,ke) in  sites">
-            <li>
-                {{ke}} : {{value}}
-            </li>
-            <li>---------------</li>
-        </template>
+<a href class="add" title=aaaa>
+    添加图片
+</a>
 
-    </ol>
+<div style="height: 100px;background: red;margin-top: 100px;margin-left: 100px;overflow: hidden">
+    <div style="height: 200px;background: orange;margin: 10px">aaaa</div>
 </div>
+<div>
 
+</div>
 <script>
+  function SuperType (name) {
+    this.colors = ['red', 'blue', 'green']
+    this.name = name // 父类属性
+  }
 
+  SuperType.prototype.sayName = function () {
+    return this.name
+  }
 
-    
+  function SubType (name, age) {
+    SuperType.call(this, name)
+    this.age = age
+  }
 
-var arr = new Array(6)
-arr[0] = "George"
-arr[1] = "John"
-arr[2] = "Thomas"
-arr[3] = "James"
-arr[4] = "Adrew"
-arr[5] = "Martin"
-
-document.write(arr + "<br />")
-arr.splice(2)
-document.write(arr + "<br />")
+  SubType.prototype = Object.create(SuperType.prototype)
+  SubType.prototype.constructor = SubType
+  let instance = new SubType('jianglong', 1332)
+  console.log(instance.sayName())
 
 </script>
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>display:inline-block</title>
+    <style type="text/css">
+        .test {
+            margin-left: auto;
+            width: 100px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div>
+
+
+    <span class="test">fdfdfdfd</span>
+    <span class="test">fdfdfdfd</span>
+
+
+</div>
+
+<script type="text/javascript">
+  function Person (name, age) {
+    this.name = name
+    this.age = age
+  }
+
+  Person.prototype.setAge = function () {
+    console.log('22222')
+  }
+
+  function Student (name, age, price) {
+    Person.call(this, name, age)
+    this.price = price
+    this.setScore = function () {
+
+    }
+  }
+
+  // Student.prototype = Object.create(Person.prototype)
+  // // Student.prototype.constructor = Student
+  // var student1 = new Student('tom', 20, 12000)
+  // console.log(student1 instanceof Student, student1 instanceof Person)
+  // student1.setAge()
+  // // console.log(Student)
+  // // console.log(student1)
+  // // console.log(student1.constructor)
+  //   console.log(Object.create(Person.prototype))
+  //   console.log(new Person())
+
+  // 父类 SuperType
+  function SuperType () {
+    this.superType = 'SuperTypeName'
+  }
+
+  // 父类 OtherSuperType
+  function OtherSuperType () {
+    this.otherSuperName = 'OtherSuperName'
+
+  }
+
+  OtherSuperType.prototype.otherSuperFunc = function () {
+    console.log('otherSuperFunc')
+  }
+  SuperType.prototype.superTypeFunc = function () {
+    console.log('superTypeFunc')
+  }
+
+  // 多继承子类
+  function AnotherType () {
+    SuperType.call(this) // 继承 SuperType 的实例属性和方法
+    OtherSuperType.call(this) // 继承 OtherSuperType 的实例属性和方法
+  }
+
+  // 继承一个类
+  AnotherType.prototype = Object.create(SuperType.prototype)
+  console.log(Object.create(SuperType.prototype))
+
+  // 使用 Object.assign 混合其它
+  Object.assign(AnotherType.prototype, OtherSuperType.prototype)
+  // Object.assign 会把  OtherSuperType 原型上的函数拷贝到 AnotherType 原型上，使 AnotherType 的所有实例都可用 OtherSuperType 的方法
+
+  // 重新指定 constructor
+  AnotherType.prototype.constructor = AnotherType
+
+  AnotherType.prototype.myMethod = function () {
+    // do a thing
+  }
+
+  let instance = new AnotherType()
+  console.log(instance)
+
+
+</script>
+</body>
+</html>
