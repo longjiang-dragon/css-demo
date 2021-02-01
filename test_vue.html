@@ -8,25 +8,52 @@
 
 <body>
 <div id="app">
-    <anchored-heading :level="2">
-        Hello world!
+    <anchored-heading :level="2" link="http://www.baidu.com">
+       <span>Hello world!</span>
     </anchored-heading>
 </div>
 </body>
 <script>
+  var getChildrenTextContent = function (children) {
+    return children.map(function (node) {
+      return node.children
+        ? getChildrenTextContent(node.children)
+        : node.text
+    }).join('')
+  }
+
   Vue.component('anchored-heading', {
     render: function (createElement) {
+      // 创建 kebab-case 风格的 ID
+      console.log("bbbb====",this.$slots.default)
+      var headingId = getChildrenTextContent(this.$slots.default)
+      .toLowerCase()
+      .replace(/\W+/g, '-')
+      .replace(/(^-|-$)/g, '')
+      console.log("aaaa=====",headingId)
+
       return createElement(
         'h' + this.level,
-        ["aaa", this.$slots.default,createElement('div','我是一个div')],
+        [
+          createElement('a', {
+            attrs: {
+              name: headingId,
+              href: this.link,
+            }
+          }, this.$slots.default)
+        ]
       )
     },
     props: {
       level: {
         type: Number,
-        required: true,
+        required: true
       },
-    },
+      link:{
+        type: String,
+        required: true,
+      }
+    }
   })
   new Vue({}).$mount('#app')
 </script>

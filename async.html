@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>display:inline-block</title>
+    <style type="text/css">
+        .test {
+            margin-left: auto;
+            width: 100px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <span class="test">fdfdfdfd</span>
+    <span class="test">fdfdfdfd</span>
+</div>
+
+<input type="file" id="input" onchange="console.log(this.files.length)" multiple/>
+
+<div style="height: 1500px;"></div>
+
+<script>
+  function sleep (interval) {
+    return new Promise(resolve => {
+      setTimeout(resolve, interval)
+    })
+  }
+
+  // 用法
+  async function one2FiveInAsync () {
+    for (let i = 1; i <= 5; i++) {
+      console.log(i)
+      await sleep(1000)
+    }
+  }
+
+  one2FiveInAsync()
+
+  function spawn (genF) {
+    return new Promise(function (resolve, reject) {
+      const gen = genF()
+
+      function step (nextF) {
+        let next
+        try {
+          next = nextF()
+        } catch (e) {
+          return reject(e)
+        }
+        if (next.done) {
+          return resolve(next.value)
+        }
+        Promise.resolve(next.value).then(function (v) {
+          step(function () { return gen.next(v) })
+        }, function (e) {
+          step(function () { return gen.throw(e) })
+        })
+      }
+
+      step(function () { return gen.next(undefined) })
+    })
+  }
+
+</script>
+</body>
+</html>

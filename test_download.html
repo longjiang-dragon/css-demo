@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>display:inline-block</title>
+    <style type="text/css">
+        .test {
+            margin-left: auto;
+            width: 100px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <span class="test">fdfdfdfd</span>
+    <span class="test">fdfdfdfd</span>
+</div>
+
+<input type="file" id="input" onchange="console.log(this.files.length)" multiple/>
+
+<div style="height: 1500px;"></div>
+
+<script>
+  // throttle-definition
+  // scroll in throttle
+  //
+  // let throttle = function (func, wait) {
+  //   let lastTime = 0    // 用来记录上次执行的时刻
+  //
+  //   // 返回包装过的throttle函数
+  //   return function (...args) {
+  //     let now = Date.now()
+  //
+  //     let coolingDown = now - lastTime < wait
+  //     if (coolingDown) {
+  //       return
+  //     }
+  //
+  //     // 记录本次执行的时刻
+  //     lastTime = Date.now()
+  //
+  //     // 冷却好了就要放大招
+  //     func.apply(null, args)
+  //   }
+  // }
+  var blob = new Blob(['Hello World'])
+  var a = document.createElement('a')
+
+  a.href = window.URL.createObjectURL(blob)
+
+  a.download = 'hello-world.txt'
+
+  a.textContent = 'Download Hello World!'
+
+  window.document.body.appendChild(a)
+
+  a.onclick = function () {
+    var selected_file = document.getElementById('input').files[0]
+    console.log(selected_file.type.split('/')[1]);
+    if (selected_file.type.indexOf('png') !== -1) {
+      var reader = new FileReader()
+      reader.onload = function (e) {
+        var dataURL = reader.result
+        console.log('dataURL====', dataURL)
+      }
+      reader.readAsDataURL(selected_file)
+      console.log(reader)
+
+    }
+
+    console.log(selected_file)
+  }
+
+  function circularReference () {
+    let obj1 = {}
+    let obj2 = {
+      b: obj1,
+    }
+    obj1.a = obj2
+    console.log(JSON.stringify(obj1));
+  }
+  circularReference();
+
+
+
+let test=new URLSearchParams('q=URLUtils.searchParams&topic=api')
+  console.log(test.get('q'))
+
+  // var dropZone = document.getElementById('drop_zone');
+  // dropZone.addEventListener('drop', handleFileSelect, false);
+  // function handleFileSelect(evt) {
+  //   evt.stopPropagation();
+  //   evt.preventDefault();
+  //   var files = evt.dataTransfer.files; // FileList object.
+  //   // ...
+  // }
+
+  // window.addEventListener('scroll', throttle(function () {
+  //   console.log('11111111111111')
+  // }, 1500))
+</script>
+</body>
+</html>

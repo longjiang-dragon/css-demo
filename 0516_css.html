@@ -4,30 +4,42 @@
     <meta charset="UTF-8">
     <title>float</title>
     <style>
-        *{
+        * {
             padding: 0;
-            margin:0;
+            margin: 0;
         }
-        .div1{
+
+        .div1[aaaaa] {
             float: left;
             width: 100px;
             height: 100px;
             background-color: lightpink;
         }
-        .div2{
-            margin-left:100px;
+
+        .div1[bbbb] {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background-color:blue;
+        }
+
+        .div2 {
+            margin-left: 100px;
             overflow: auto;
             box-sizing: border-box;
             background-color: lightgreen;
         }
-        .test-flex{
+
+        .test-flex {
             display: flex;
             flex-wrap: wrap;
         }
-        .test-flex>div{
-         flex: auto;
+
+        .test-flex > div {
+            flex: auto;
         }
-        .line{
+
+        .line {
             margin-top: 100px;
             height: 1px;
             background: red;
@@ -36,18 +48,30 @@
     </style>
 </head>
 <body>
-<div class="div1">
+<div class="div1" aaaaa>
     这是div1
 </div>
-<div class="div2">
-    <div style="float:left">这是一个浮动的标题</div>
-    <div style="clear:both"></div>
-</div>
-<div class="test-flex">
-    <div>我是flex测试文字</div>
-    <div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div><div>我是flex测试文字</div>
-</div>
+<div class="div1" bbbb>
+    <div class="div1" bbbb>
+        这是div1
+    </div>
+    <div class="div2">
+        <div style="float:left">这是一个浮动的标题</div>
+        <div style="clear:both"></div>
+    </div>
+    <div class="test-flex">
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+        <div>我是flex测试文字</div>
+    </div>
 
-<div class="line"></div>
+    <div class="line"></div>
 </body>
 </html>
