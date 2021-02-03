@@ -20,7 +20,7 @@ const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
-export function MyPromise (executor) {
+function MyPromise (executor) {
   let self = this
   self.status = PENDING
   self.onFulfilled = []//成功的回调
@@ -119,8 +119,9 @@ function resolvePromise (promise2, x, resolve, reject) {
   if (x && typeof x === 'object' || typeof x === 'function') {
     let used //PromiseA+2.3.3.3.3 只能调用一次
     try {
+      // 如果then方法存在，则说明他是一个promise
       let then = x.then
-      // 主动
+      // 返回的是一个promise
       if (typeof then === 'function') {
         //PromiseA+2.3.3
         then.call(x, (y) => {
@@ -153,5 +154,7 @@ function resolvePromise (promise2, x, resolve, reject) {
     resolve(x)
   }
 }
+
+// export { MyPromise }
 
 
